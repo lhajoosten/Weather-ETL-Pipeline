@@ -18,7 +18,11 @@ class WeatherDashboard:
         WHERE timestamp >= DATEADD(day, -{days}, GETDATE())
         ORDER BY timestamp DESC
         """
-        return pd.read_sql(query, self.engine)
+        try:
+            return pd.read_sql(query, self.engine)
+        except Exception as e:
+            logging.error("Error loading weather data: %s", e)
+            return pd.DataFrame()
     
     def load_air_quality_data(self, days: int = 7) -> pd.DataFrame:
         """Load air quality data from the last N days"""
@@ -27,7 +31,11 @@ class WeatherDashboard:
         WHERE timestamp >= DATEADD(day, -{days}, GETDATE())
         ORDER BY timestamp DESC
         """
-        return pd.read_sql(query, self.engine)
+        try:
+            return pd.read_sql(query, self.engine)
+        except Exception as e:
+            logging.error("Error loading air quality data: %s", e)
+            return pd.DataFrame()
     
     def create_temperature_trends_chart(self, df: pd.DataFrame):
         """Create temperature trends chart by province"""
