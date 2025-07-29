@@ -7,6 +7,6 @@ def get_weather(city: str):
         "appid": OPENWEATHER_API_KEY,
         "units": "metric"
     }
-    response = requests.get(BASE_URL, params=params)
+    response = requests.get(BASE_URL, params=params, timeout=30)
     response.raise_for_status()
     return response.json()
